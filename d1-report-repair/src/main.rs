@@ -1,5 +1,6 @@
 use std::env;
 use std::fs;
+use std::collections::HashMap;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -12,11 +13,21 @@ fn main() {
 
     let content: Vec<i32> = content.lines().map(|x| x.parse::<i32>().expect("OK")).collect();
 
+    let mut duos: HashMap<i32, (&i32, &i32)> = HashMap::new();
+
     for c1 in &content {
         for c2 in &content {
-            if c1 + c2 == 2020 {
-                println!("{} + {} = {}", c1, c2, c1 + c2);
-                println!("{} x {} = {}", c1, c2, c1 * c2);
+            if c1 != c2 && c1 + c2 < 2020 {
+                duos.insert(c1 + c2, (c1, c2));
+            }
+        }
+    }
+
+    for c in &content {
+        for (k, v) in &duos {
+            if c + k == 2020 {
+                println!("{} + {} + {} = {}", c, v.0, v.1, c + v.0 + v.1);
+                println!("{} * {} * {} = {}", c, v.0, v.1, c * v.0 * v.1);
                 return;
             }
         }
