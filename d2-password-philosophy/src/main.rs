@@ -2,7 +2,6 @@ use std::fs::File;
 use std::io::{BufRead, BufReader};
 
 fn main() {
-
     let filename = "input.txt";
 
     let file = File::open(filename).expect("Couldn't open the file");
